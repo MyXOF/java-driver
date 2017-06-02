@@ -89,9 +89,9 @@ public class ExecutionInfo {
      * query on the same host, so the same host might appear twice.</li>
      * <li>if {@link com.datastax.driver.core.policies.SpeculativeExecutionPolicy speculative executions}
      * are enabled, this will also contain hosts that were tried by other executions (however, note that
-     * this only contains hosts for which a response was received; if an execution is waiting for a response
-     * from a host and another execution completes the request in the meantime, then the host of the first
-     * execution will not be in that list).</li>
+     * this only contains hosts which timed out, or for which a response was received; if an execution is
+     * waiting for a response from a host and another execution completes the request in the meantime, then
+     * the host of the first execution will not be in that list).</li>
      * </ul>
      * <p/>
      * If you are only interested in fetching the final (and often only) node
@@ -107,7 +107,7 @@ public class ExecutionInfo {
     /**
      * Return the Cassandra host that coordinated this query.
      * <p/>
-     * This is a shortcut for {@code getTriedHosts().get(getTriedHosts().size())}.
+     * This is a shortcut for {@code getTriedHosts().get(getTriedHosts().size() - 1)}.
      *
      * @return return the Cassandra host that coordinated this query.
      */
