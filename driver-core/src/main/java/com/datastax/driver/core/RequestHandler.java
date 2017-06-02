@@ -313,6 +313,10 @@ class RequestHandler {
             Futures.addCallback(connectionFuture, new FutureCallback<Connection>() {
                 @Override
                 public void onSuccess(Connection connection) {
+                    if (isDone.get()) {
+                        connection.release();
+                        return;
+                    }
                     if (current != null) {
                         if (triedHosts == null)
                             triedHosts = new CopyOnWriteArrayList<Host>();
